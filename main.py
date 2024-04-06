@@ -13,7 +13,7 @@ class Translator():
         bbox = (x1, y1, x2, y2)
         im = ImageGrab.grab(bbox)
         # config --psm 11 es la forma en la que lee el texto, existen mas
-        text_raw = pytesseract.image_to_string(im, lang='eng', config='--psm 11')
+        text_raw = pytesseract.image_to_string(im, lang='jpn', config='--psm 11')
         text = text_raw.replace('/','!')
         #Borrar espacios en blanco
         text = "\n".join([linea.rstrip() for linea in text.splitlines() if linea.strip()])
@@ -35,7 +35,11 @@ class Translator():
                 lines = new_lines
                 for line in lines:
                     print(line)
-                    print(ts.translate_text(line, to_language='es')) #English -> ts.translate_text(line)
+                    try:
+                        translation = ts.translate_text(line, to_language='es')#English -> ts.translate_text(line)
+                        print(translation)
+                    except KeyError:
+                        print("Error: No se pudo traducir la línea.")
                     print('---------')
             time.sleep(0.1)
 
@@ -43,7 +47,7 @@ class DesktopController(wx.Frame):
    
     def __init__(self, parent, title):
         super(DesktopController, self).__init__(parent, title=title)
-        self.SetTransparent(200)
+        self.SetTransparent(50)
         self.button = wx.Button(self)
         self.Bind(wx.EVT_BUTTON, self.on_button_click, self.button)
         self.SetPosition(wx.Point(0,0))
@@ -56,9 +60,9 @@ class DesktopController(wx.Frame):
         x2,y2 = x1 + size[0], y1 + size[1]
         print(x1,y1,x2,y2)
         self.Hide() #oculta el rectangulo
+
         #Iniciar la traduccion...
         Translator().start_reading(x1,y1,x2,y2)
-
 
 if __name__ == '__main__':
     app = wx.App()
