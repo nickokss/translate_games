@@ -13,7 +13,7 @@ class Translator():
         bbox = (x1, y1, x2, y2)
         im = ImageGrab.grab(bbox)
         # config --psm 11 es la forma en la que lee el texto, existen mas
-        text_raw = pytesseract.image_to_string(im, lang='jpn', config='--psm 11')
+        text_raw = pytesseract.image_to_string(im, lang='eng', config='--psm 11')
         text = text_raw.replace('/','!')
         #Borrar espacios en blanco
         text = "\n".join([linea.rstrip() for linea in text.splitlines() if linea.strip()])
@@ -35,7 +35,7 @@ class Translator():
                 lines = new_lines
                 for line in lines:
                     print(line)
-                    print(ts.translate_text(line)) #Español -> ts.translate_text(line, to_language='es')
+                    print(ts.translate_text(line, to_language='es')) #English -> ts.translate_text(line)
                     print('---------')
             time.sleep(0.1)
 
