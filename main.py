@@ -39,7 +39,7 @@ class Translator():
                         translation = ts.translate_text(line, to_language='es')#English -> ts.translate_text(line)
                         print(translation)
                     except KeyError:
-                        print("Error: No se pudo traducir la línea.")
+                        print("Error: No se pudo traducir la línea correctamente.")
                     print('---------')
             time.sleep(0.1)
 
